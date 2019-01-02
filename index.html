@@ -2,17 +2,20 @@
 <html>
 <head>
   <title>Jquery Speed Typer</title>
+  <link rel="stylesheet" type="text/css" href="css/libs/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="css/estilos.css">
 </head>
 <body>
-<h1>Jquery Speed Typer</h1>
-<p class="phrase">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+<div class="container">
+  <h1 class="center">Jquery Speed Typer</h1>
+<p class="phrase center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-<ul class="info">
+<ul class="info center">
   <li><span id="phraseSize">{phraseSize}</span> palavras</li>
   <li><span id="type-timer">10</span> segundos</li>
 </ul>
@@ -20,11 +23,12 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <textarea class="type-field" rows="8" cols="40"></textarea>
 <button id="button-reset">Reiniciar Jogo</button>
 
-<ul>
+<ul class="center">
   <li><span id="character-counter">0</span> caracteres</li>
   <li><span id="word-counter">0</span> palavras</li>
   
 </ul>
+</div>     
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/main.js"></script>

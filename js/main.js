@@ -39,6 +39,9 @@ function startTimer(){
       if(remainingTime < 1){
         field.attr("disabled", true);
         clearInterval(chronometerID);
+        //field.css("background-color", "lightgray");
+        field.addClass("field-disabled");
+
       }
     }, 1000);
   });

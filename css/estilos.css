@@ -1,0 +1,12 @@
+.phrase{
+  font-size: 20px;
+}
+
+.type-field{
+  font-size: 20px;
+  height: 130px;
+}
+
+.field-disabled{
+  background-color: lightgray;
+}
