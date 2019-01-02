@@ -40,7 +40,7 @@ function startTimer(){
         field.attr("disabled", true);
         clearInterval(chronometerID);
         //field.css("background-color", "lightgray");
-        field.addClass("field-disabled");
+        field.toggleClass("field-disabled");
 
       }
     }, 1000);
@@ -55,6 +55,7 @@ function restartGame(){
   $('#character-counter').text("0"); // Reinicia o contador de letras
   $("#type-timer").text(intialTime); //Zera o tempo do contador
   startTimer(); //(Re)Inicia o Contador
+  field.toggleClass("field-disabled");
 }
 
 //Ao clicar no botão, o jogo é reiniciado
