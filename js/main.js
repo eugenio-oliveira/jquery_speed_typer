@@ -1,64 +1,78 @@
-var intialTime = $("#type-timer").text();
+var tempoInicial = $("#tempo-digitacao").text();
+var campo = $(".campo-digitacao");
 
-//Ao carregar a página, carrega-se todas as funções necessárias para o aplicativo
-$(document).ready(function(){
-  updatePhraseSize();
-  startCounters();
-  startTimer();
+$(function() {
+    atualizaTamanhoFrase();
+    inicializaContadores();
+    inicializaCronometro();
+    inicializaMarcadores();
+    $("#botao-reiniciar").click(reiniciaJogo);
 });
 
-//Função para atualizar o tamanho da frase
-function updatePhraseSize(){
-  var phrase = $('.phrase').text(); //Pega o texto que deve ser digitado pelo usuário
-  var wordSize = phrase.split(' ').length; //Separa o texto por palavras através dos espaços
-  var phraseSize =  $('#phraseSize'); //Guarda o tamanho da frase
-  phraseSize.text(wordSize); //Exibe o tamanho da frase
+function atualizaTamanhoFrase() {
+    var frase = $(".frase").text();
+    var numPalavras  = frase.split(" ").length;
+    var tamanhoFrase = $("#tamanho-frase");
+
+    tamanhoFrase.text(numPalavras);
 }
 
-var field = $('.type-field');
+function inicializaContadores() {
+    campo.on("input", function() {
+        var conteudo = campo.val();
 
-//Função para iniciar os contadores
-function startCounters(){
-    field.on('input', function(){
-    var content = field.val(); //Pega o conteúdo escrito no campo
-    var wordQty = content.split(/\S+/).length - 1; //Verifica se as palavras estão separadas por espaço
-    $('#word-counter').text(wordQty); //Insere a quantidade de palavras escritas
-    var characterQty = content.length; //Pega o tamanho de letras escrito pelo usuário
-    $('#character-counter').text(characterQty); //Exibe a quantidade de letras escritas pelo usuário
-  });
+        var qtdPalavras = conteudo.split(/\S+/).length - 1;
+        $("#contador-palavras").text(qtdPalavras);
 
+        var qtdCaracteres = conteudo.length;
+        $("#contador-caracteres").text(qtdCaracteres);
+    });
 }
 
-//Função para inciar o timer
-function startTimer(){
-    var remainingTime = $("#type-timer").text(); //Pega o tempo descrito no span
-    field.one("focus", function(){
-   var chronometerID = setInterval(function(){
-      remainingTime--;
-      $("#type-timer").text(remainingTime);
-      if(remainingTime < 1){
-        field.attr("disabled", true);
-        clearInterval(chronometerID);
-        //field.css("background-color", "lightgray");
-        field.toggleClass("field-disabled");
+function inicializaMarcadores() {
+    var frase = $(".frase").text();
+    campo.on("input", function() {
+        var digitado = campo.val();
+        var comparavel = frase.substr(0, digitado.length);
 
-      }
-    }, 1000);
-  });
+        if (digitado == comparavel) {
+            campo.addClass("borda-verde");
+            campo.removeClass("borda-vermelha");
+        } else {
+            campo.addClass("borda-vermelha");
+            campo.removeClass("borda-verde");
+        }
+    });
 }
 
-//Função para reiniciar o jogo
-function restartGame(){
-  field.attr("disabled", false); //seta  atributo "disabled" para false
-  field.val(""); //zera o conteúdo do campo de texto
-  $('#word-counter').text("0"); //Reinicia o contador de palavras
-  $('#character-counter').text("0"); // Reinicia o contador de letras
-  $("#type-timer").text(intialTime); //Zera o tempo do contador
-  startTimer(); //(Re)Inicia o Contador
-  field.toggleClass("field-disabled");
+function inicializaCronometro() {
+    var tempoRestante = $("#tempo-digitacao").text();
+    campo.one("focus", function() {
+    	var cronometroID = setInterval(function() {
+    		tempoRestante--;
+    		$("#tempo-digitacao").text(tempoRestante);
+    		if (tempoRestante < 1) {
+                clearInterval(cronometroID);
+                finalizaJogo();
+    		}
+    	}, 1000);
+    });
 }
 
-//Ao clicar no botão, o jogo é reiniciado
-$("#button-reset").click(function(){
-  restartGame();
-});
+function finalizaJogo() {
+    campo.attr("disabled", true);
+    campo.toggleClass("campo-desativado");
+    inserePlacar();
+}
+
+function reiniciaJogo() {
+    campo.attr("disabled", false);
+    campo.val("");
+    $("#contador-palavras").text(0);
+    $("#contador-caracteres").text(0);
+    $("#tempo-digitacao").text(tempoInicial);
+    inicializaCronometro();
+    campo.toggleClass("campo-desativado");
+    campo.removeClass("borda-vermelha");
+    campo.removeClass("borda-verde");
+}
