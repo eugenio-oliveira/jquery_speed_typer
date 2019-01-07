@@ -1,6 +1,8 @@
+$("#botao-placar").click(mostraPlacar);
+
 function inserePlacar() {
     var corpoTabela = $(".placar").find("tbody");
-    var usuario = "Eugêmio"
+    var usuario = "Eugênio"
     var numPalavras = $("#contador-palavras").text();
 
     var linha = novaLinha(usuario, numPalavras);
@@ -32,4 +34,8 @@ function novaLinha(usuario, palavras) {
 function removeLinha() {
     event.preventDefault();
     $(this).parent().parent().remove();
+}
+
+function mostraPlacar(){
+    $(".placar").slideToggle(600);
 }
